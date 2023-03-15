@@ -51,6 +51,12 @@ function AddRecipe() {
             navigate('/');
             });
     }
+
+    function onImageChange (event: React.ChangeEvent<HTMLInputElement>)  {
+    const { files } = event.target;
+    const selectedFiles = files as FileList;   
+    setimage(URL.createObjectURL(selectedFiles?.[0])) 
+  };
     
 
     return ( 
@@ -61,12 +67,11 @@ function AddRecipe() {
 
         <div className=" form-max-w m-aotu row w-50 p-3 mx-auto mt-5">
 
-            <div className="mb-3">
-                <label className="mb-2" htmlFor="">Dish Image</label>
-               <input className="form-control" type="text" 
-                value={image} onChange={(e)=>setimage(e.target.value)}/>
-            </div>
-
+           <div className="mb-3 ">
+            <label className="mb-2" htmlFor="">Dish image</label>
+            <input type="file" className="form-control form-control-lg"  onChange={onImageChange} />
+           </div>
+    
             <div className="mb-3 ">
                 <label className="mb-2" htmlFor="">Dish Name</label>
                 <input className="form-control" type="text"
