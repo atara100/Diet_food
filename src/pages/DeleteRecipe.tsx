@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Title from "../components/Title";
-import { deleteRequest, getRequest } from "../services/apiService";
+import { deleteRequest, getRequest, patchRequest } from "../services/apiService";
+import { IRecipe } from "./Recipes";
+import { AppContext } from "../App";
+import { log } from "console";
 
 function DeleteRecipe() {
 
@@ -21,13 +24,45 @@ function DeleteRecipe() {
            setTitle(json.title);
            })  
     },[id]);
-       
+
+    const context=useContext(AppContext);
+    if(!context) return <div>Error</div>
+    const userId=context.userId;
+    const updateUserFavourites=context.updateUserFavourites;
+    
+    function handleFavourites(recipe:IRecipe){
+      const res=patchRequest(`users/${userId}`,recipe)
+      if(!res) return;
+            res.then(res => res.json())
+            .then(json => {
+                if (json.error) {
+                    console.log(json.error);
+                    return;
+                }
+                updateUserFavourites(json.favourites); 
+                          
+              })
+    }
+ 
+    
     function delRecipe(){
+ 
+       const recipe=getRequest(`recipes/${id}`);
+        if(!recipe){
+          setError('Error get the data');
+          return;
+        } 
+        recipe.then(recipe=>recipe.json())
+           .then(recipe=>{           
+            handleFavourites(recipe);
+           }) 
+
         const res=deleteRequest(`recipes/${id}`);
         if(!res) return;
 
         res.then(res=>res.json())
            .then(json=>{
+            
             navigate('/');
             })
     }

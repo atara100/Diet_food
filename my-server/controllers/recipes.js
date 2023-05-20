@@ -45,7 +45,7 @@ module.exports={
                 description:joi.string().required(),
                 ingredients:joi.string().required(),
                 method:joi.string().required(),
-                calories:joi.string().required()
+                calories:joi.number().required()
             });
 
             const {error,value}=schema.validate(req.body);
@@ -78,7 +78,7 @@ module.exports={
                 description:joi.string().required(),
                 ingredients:joi.string().required(),
                 method:joi.string().required(),
-                calories:joi.string().required()
+                calories:joi.number().required()
             });
 
             const {error,value}=schema.validate(req.body);

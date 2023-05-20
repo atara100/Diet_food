@@ -13,7 +13,15 @@ export interface IRecipe{
    description:string;
    ingredients:string
    method:string;
-   calories:string;
+   calories:number;
+}
+
+export enum FilterCalories{
+  all='all',
+  upTo300='300',
+  upTo500= '500',
+  upTo800= '800',
+  over800='801'
 }
 
 
@@ -23,6 +31,7 @@ function Recipes() {
    const [recipes,setRecipes]=useState<Array<IRecipe>>([]);
    const [search,setSearch]=useState('');
    const [filtered,setFiltered]=useState([...recipes]);
+   const [selectedFilter,setSelectedFilter]=useState(FilterCalories.all);
 
    function fetchRecipes(){
     const res=getRequest('recipes');
@@ -41,7 +50,29 @@ function Recipes() {
     const userAdmin=context.userAdmin;
     const userId=context.userId;
     const userFavourites=context.userFavourites;
-    const updateUserFavourites=context.updateUserFavourites
+    const updateUserFavourites=context.updateUserFavourites;
+
+    function filterByCalories(calorie:FilterCalories,recipes:Array<IRecipe>):Array<IRecipe>{
+      if(calorie===FilterCalories.all){
+        
+         return recipes;
+      }
+
+    return recipes.filter(recipe=> recipe.calories<=+(calorie));
+     }
+
+    function handleFilterChange(e:React.ChangeEvent<HTMLSelectElement>){
+       const value=e.target.value as FilterCalories;
+       
+       filterChange(value);
+    }
+    function filterChange(value:FilterCalories){
+       const filteredData=filterByCalories(value,[...recipes]);
+
+       setSelectedFilter(value);
+        setSearch('');
+       setFiltered(filteredData);     
+    }
 
     function handleSearch(e:React.ChangeEvent<HTMLInputElement>){
 
@@ -76,7 +107,11 @@ function Recipes() {
     <>
         <h1 className="text-center">All Recipes </h1> 
 
-          <SearchFilteringBar search={search} handleSearch={handleSearch}/>
+          <SearchFilteringBar 
+           search={search} handleSearch={handleSearch} 
+           selectedFilter={selectedFilter}
+           handleFilterChange={handleFilterChange}
+          />
 
         {
           userAdmin &&
@@ -108,7 +143,10 @@ function Recipes() {
               </div>
               }
 
-              <div className="d-flex justify-content-end mt-3">
+              <div className="d-flex d-flex justify-content-between mt-3">
+                
+                <Link to={`/contentDetails/${recipe._id}`} className="btn btn-light">see more <i className="bi bi-caret-right"></i></Link>
+
                 <button onClick={()=>handleFavourites(recipe)} className="btn btn-lg">
                   {
                     userFavourites.includes(`${recipe._id}`) &&

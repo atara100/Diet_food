@@ -5,6 +5,8 @@ const joi=require('joi');
 const bcrypt = require('bcrypt');
 const { Recipe } = require('../models/Recipe');
 var mongoose = require('mongoose');
+var nodemailer = require('nodemailer');
+
 
 
 module.exports ={
@@ -26,7 +28,10 @@ module.exports ={
                 res.status(401).json({ error: 'Invalid email' });
                 return;
             }
+            
             const validPassword=await bcrypt.compare(value.password,user.password);
+            console.log(user.password);
+            console.log(value.password);
             if(!validPassword){
                 res.status(401).json({ error: 'Invalid password' });
                 return
@@ -56,21 +61,21 @@ module.exports ={
        try{
         const schema=joi.object({
             name: joi.string().required().min(2).max(256),
-            email: joi.string().min(6).max(256).required().email(),
-            password: joi.string().min(6).max(1024).required(),
+            email: joi.string().min(6).max(256).email().regex(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).required(),
+            password: joi.string().min(8).max(1024).regex(/((?=.{8,})(?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}))/).required(),
         });
 
         const {error,value}=schema.validate(req.body);
 
         if(error){
-            throw 'error sign up new user';
+            throw 'email or password error';
         }
 
         const user=await User.findOne({email:value.email})
         if(user){
             return res.status(400).json({error:"User already registered"})
         }
-
+        
         const hash=await bcrypt.hash(value.password,10);
         const newUser=new User({
             name:value.name,
@@ -88,7 +93,7 @@ module.exports ={
             weight:newUser.weight
         })
        }catch(err){
-            res.status(401).json({ error: 'error sign up new user'  });
+            res.status(401).json({ error: 'error in sign up new user'  });
        }
     },
 
@@ -150,6 +155,120 @@ module.exports ={
          res.status(400).json({error:'error getting favourites'});
         }
         
+    },
+
+    forgotPassword: async function(req, res,next){
+        try{
+
+         const schema=joi.object({
+                email:joi.string().required().min(6).max(256).email(),
+            });
+            
+            const {error,value} =schema.validate(req.body);
+
+            if(error){
+                throw 'error email';
+            }
+
+
+          const oldUser=await User.findOne({email:value.email});
+
+          if(!oldUser){
+            return res.json({status:'user not exist'})
+          } 
+          const secret=config.jwt_token+oldUser.password;
+          const token=jwt.sign({email:oldUser.email,id:oldUser._id},secret,{expiresIn:"10m",});
+          const link=`http://localhost:3001/reset-password/${oldUser._id}/${token}`;
+           var transporter = nodemailer.createTransport({
+             service: 'gmail',
+             auth: {
+               user: 'al0583230109@gmail.com',
+               pass: 'dvysucvwtifkqnfz'
+             }
+           });
+
+           var mailOptions = {
+             from: 'youremail@gmail.com',
+             to: value.email,
+             subject: 'Password reset',
+             text: link
+           };
+
+           transporter.sendMail(mailOptions, function(error, info){
+             if (error) {
+               console.log(error.message);
+             } else {
+               console.log('Email sent: ' + info.response);
+               res.status(200).json({ok:'mail sent'});
+             }
+           });
+
+          }
+        catch(error){}
+    },
+
+    resetPassword:async function(req, res, next){
+
+        try{
+          const schema=joi.object({
+                _id:joi.string().required(),
+                token:joi.string().required()
+            });
+            const {error,value}=schema.validate({_id:req.params._id,token:req.params.token});
+
+            if(error){
+                res.status(400).json({error:'invalid data'});
+                return;
+            }
+
+            const oldUser=await User.findOne({_id:value._id});
+            if(!oldUser){
+                return res.json({status:"user not exist"});
+            }
+            const secret=config.jwt_token+oldUser.password;
+            const verify=jwt.verify(value.token,secret);
+
+            res.status(200).json({ok:verify.email});
+
+        }catch(error){
+            console.log(error);
+            res.status(400).json({error:"not verified"})
+        }
+    },
+ 
+    newPassword:async function(req, res,next){
+        try{
+          const schema=joi.object({
+                _id:joi.string().required(),
+                token:joi.string().required(),
+                password: joi.string().min(8).max(1024).regex(/((?=.{8,})(?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}))/).required(),
+            });
+            const {error,value}=schema.validate({_id:req.params._id,token:req.params.token,password:req.body.password});
+
+            if(error){
+                console.log(error);
+                res.status(400).json({error:error.message});
+                return;
+            }
+
+            const oldUser=await User.findOne({_id:value._id});
+            if(!oldUser){
+                return res.json({status:"user not exist"});
+            }
+            const secret=config.jwt_token+oldUser.password;
+            const verify=jwt.verify(value.token,secret);
+            console.log(value.password);
+            const encryptedPass=await bcrypt.hash(value.password,10);
+            await User.updateOne({_id:value._id},{$set:{password:encryptedPass}});
+            console.log('password updated');
+            res.status(200).json({ok:'password updated'});
+
+        }catch(error){
+            console.log(error);
+            res.status(400).json({error:"Something went wrong"})
+        }
     }
+
+    
 
 }

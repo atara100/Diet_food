@@ -44,9 +44,10 @@ function SignUp() {
        res.then(response=>response.json())
        .then(json=>{
         if(json.error){
-            alert(json.error);
+            setError(json.error);
             return;
         }
+        setError('');
         navigate('/login');
        })
     }
@@ -59,22 +60,24 @@ function SignUp() {
                   sub="register to the application"
             />
 
+            <div className="form-max-w m-aotu row w-50 p-3 mx-auto mt-5">
+
             <div className="mb-3">
-               <input className="form-control" type="text" placeholder="Name"
+               <input className="form-control rounded-pill" type="text" placeholder="Name"
                 value={name} onChange={(e)=>setName(e.target.value)}/>
             </div>
 
             <div className="mb-3">
-               <input className="form-control" type="email" placeholder="Email"
+               <input className="form-control rounded-pill" type="email" placeholder="Email"
                value={email} onChange={(e)=>setEmail(e.target.value)} />
             </div>
 
             <div className="mb-3">
-               <input className="form-control" type="password" placeholder="Password"
+               <input className="form-control rounded-pill" type="password" placeholder="Password"
                value={password} onChange={(e)=>setPassword(e.target.value)} />
             </div>
 
-            <button onClick={submit} className="btn btn-primary btn-lg">
+            <button onClick={submit} className="btn btn-warning btn-lg w-50 mx-auto rounded-pill mt-3">
                 Sign Up
             </button>
 
@@ -85,6 +88,7 @@ function SignUp() {
                 </div>
             }
 
+          </div>
         </div>
         </>
      );

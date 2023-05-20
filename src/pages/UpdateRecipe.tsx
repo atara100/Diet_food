@@ -43,7 +43,7 @@ function UpdateRecipe() {
             description:Joi.string().required().min(10).max(200),
             ingredients:Joi.string().required().min(10),
             method:Joi.string().required().min(10),
-            calories:Joi.string().required().min(1)
+            calories:Joi.number().required().min(1)
         });
 
         const {error,value}=schema.validate({

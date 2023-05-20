@@ -13,8 +13,8 @@ function Header() {
  <header>
    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
      <div className="container-fluid ">   
-    <NavLink className="navbar-brand" to="/">
-      <i className="bi bi-speedometer2"></i> Diet Food
+    <NavLink className="navbar-brand fs-4" to="/">
+      <i className="bi bi-speedometer2 fs-4 me-1"></i> Diet Food
     </NavLink>
 
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -27,7 +27,7 @@ function Header() {
                           
                             <li className="nav-item">
                                 <NavLink
-                                    className="nav-link"
+                                    className="nav-link fs-5"
                                     aria-current="page"
                                     to="/about"
                                 >
@@ -38,7 +38,7 @@ function Header() {
 
                             <li className="nav-item">
                                 <NavLink
-                                    className="nav-link"
+                                    className="nav-link fs-5"
                                     aria-current="page"
                                     to="/favourites"
                                 >
@@ -61,7 +61,7 @@ function Header() {
 
                            <li className="nav-item">
                                 <NavLink
-                                    className="nav-link"
+                                    className="nav-link fs-5"
                                     aria-current="page"
                                     to="/signup"
                                 >
@@ -71,7 +71,7 @@ function Header() {
                             
                             <li className="nav-item">
                                 <NavLink
-                                    className="nav-link"
+                                    className="nav-link fs-5"
                                     aria-current="page"
                                     to="/login"
                                 >

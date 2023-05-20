@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import Title from "../components/Title";
 import Joi from "joi";
 import { AppContext } from "../App";
+import { Link } from "react-router-dom";
 
 
 function Login() {
@@ -41,22 +42,27 @@ function Login() {
 
         <div className="form-max-w m-aotu row w-50 p-3 mx-auto mt-5">
 
-            <div className="mb-3">
+            <div className="mb-3" >
                 <input
-                    type="email" className="form-control" placeholder="Email"
+                    type="email" className="form-control rounded-pill" placeholder="Email"
                     value={email} onChange={(e)=>setEmail(e.target.value)}/>
             </div>
             <div className="mb-3">
                 <input
-                    type="password" className="form-control" placeholder="Password"
+                    type="password" className="form-control rounded-pill" placeholder="Password"
                     value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
 
             <button
-                className="btn btn-primary btn-lg w-50 mx-auto" onClick={submit}>
+                className="btn btn-warning btn-lg w-50 mx-auto rounded-pill mt-3" onClick={submit}>
                 Login
             </button>
-
+            
+        <div className="m-auto mt-5 text-center">
+           <Link to="/passwordReset" >
+             Forgot password ?
+           </Link>
+        </div>
             {
                 error &&
                 <div className="text-danger text-center">

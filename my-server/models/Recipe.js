@@ -22,7 +22,7 @@ const recipeSchema=new mongoose.Schema({
         require:true
     },
     calories:{
-        type:String,
+        type:Number,
         require:true
     }
 });

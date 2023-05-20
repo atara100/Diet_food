@@ -16,6 +16,9 @@ import AddRecipe from './pages/AddRecipe';
 import UpdateRecipe from './pages/UpdateRecipe';
 import DeleteRecipe from './pages/DeleteRecipe';
 import Favourites from './pages/Favourites';
+import PasswordReset from './auth/PasswordReset';
+import ContentDetails from './pages/ContentDetails';
+import NewPassword from './auth/NewPassword';
 
 interface ILoginData{
   email:string,
@@ -86,6 +89,9 @@ function App() {
       <Route path='/deleterecipe/:id' element={<DeleteRecipe/>}></Route>
       <Route path='/about' element={<About/>}></Route>
       <Route path='/favourites' element={<Favourites/>}></Route>
+      <Route path='/passwordReset' element={<PasswordReset/>}></Route>
+      <Route path='/contentDetails/:id' element={<RouteGuard><ContentDetails/></RouteGuard>}></Route>
+      <Route path='/reset-password/:_id/:token' element={<NewPassword/>}></Route>
     </Routes>
 
     <Footer/>
