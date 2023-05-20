@@ -14,14 +14,14 @@ function SearchFilteringBar({search,handleSearch,selectedFilter,handleFilterChan
    
     return ( 
        <div className="d-flex px-5 mt-5 row">        
-          <div className="d-flex  col-sm-1 col-md-10 col-lg-8">
+          <div className="d-flex mb-5 col-sm-2 col-md-10 col-lg-8">
 
-            <div className="d-flex align-items-center me-5">
+            <div className="d-flex align-items-center me-5 mt-5">
               <input className="forn-control p-1 mb-3" placeholder='Search' type="text"
               value={search} onChange={(e)=> handleSearch(e)}/>
             </div>
         
-            <div className="d-flex align-items-center ">
+            <div className="d-flex row align-items-center ">
              <label className="mx-3" htmlFor="filter" >Filter by maximum number of calories:</label>
              <select value={selectedFilter} onChange={handleFilterChange} 
                className="form-select" name="filter" id="filter">
