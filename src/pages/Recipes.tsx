@@ -123,10 +123,10 @@ function Recipes() {
             </div>
         }
         
-        <div className="mx-5 d-flex">
+        <div className="mx-5 d-flex row justify-content-around">
         {
             filtered.map((recipe:IRecipe)=> 
-            <div key={recipe._id} className="card p-3 me-3  col col-10 col-sm-12 col-md-4 col-lg-3 mb-3">            
+            <div key={recipe._id} className="card p-3 me-5 col-sm-6 col-md-4 col-lg-3 mb-3">            
               <RecipeCard recipe={recipe}/>
 
               {

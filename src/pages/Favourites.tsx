@@ -28,7 +28,9 @@ function Favourites() {
   
     return ( 
     <>
-        <h1>favourites</h1>
+        <Link className="btn ms-5" to={"/"}><i className="bi bi-arrow-left-circle fs-2"></i></Link>
+
+        <h1 className="text-center mb-5">Favourites<i className="bi bi-suit-heart ms-3"></i></h1>
 
         <div className="mx-5 d-flex">
         {

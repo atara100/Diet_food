@@ -1,9 +1,8 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
 import { removeToken, setToken } from './auth/tokenMgmt';
 import { postRequest } from './services/apiService';
 import {Route, Routes, useNavigate} from 'react-router-dom';
-import Title from './components/Title';
 import Login from './auth/Login';
 import Home from './pages/Home';
 import SignUp from './auth/SignUp';

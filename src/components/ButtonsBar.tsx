@@ -1,6 +1,4 @@
-import { type } from "os";
 import { FilterCalories } from "../pages/Recipes";
-import { log } from "console";
 
 interface Props{
     search:string;
@@ -15,8 +13,8 @@ function SearchFilteringBar({search,handleSearch,selectedFilter,handleFilterChan
   const filterByCalories=Object.values(FilterCalories);
    
     return ( 
-       <div className="d-flex px-5 mt-5">        
-          <div className="d-flex ">
+       <div className="d-flex px-5 mt-5 row">        
+          <div className="d-flex  col-sm-1 col-md-10 col-lg-8">
 
             <div className="d-flex align-items-center me-5">
               <input className="forn-control p-1 mb-3" placeholder='Search' type="text"

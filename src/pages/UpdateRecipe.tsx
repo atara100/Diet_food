@@ -74,6 +74,7 @@ function UpdateRecipe() {
 
     return ( 
         <>
+        <Link className="btn ms-5" to={"/"}><i className="bi bi-arrow-left-circle fs-2"></i></Link>
         <Title main="Update Recipe"
                 sub="update this recipe"
         />
@@ -116,13 +117,15 @@ function UpdateRecipe() {
                 value={calories} onChange={(e)=>setCalories(e.target.value)}/>
             </div>
 
-            <button onClick={handleClick} className="btn btn-primary btn-lg w-50 mx-auto">
+            <div className="d-flex mt-5 mx-auto">
+             <button onClick={handleClick} className="btn btn-lg btn-primary w-25 me-3 mx-auto">
                 Update 
             </button>
 
-            <Link to='/' className="btn btn-secondary ms-3 me-3" >
+             <Link to='/' className="btn btn-lg btn-secondary w-25 mx-auto " >
                 Cancele
-            </Link>
+             </Link>
+            </div>
 
         </div>
 

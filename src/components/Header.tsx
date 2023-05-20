@@ -10,8 +10,8 @@ function Header() {
     const userName = context.userName;
     
     return ( 
- <header>
-   <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+ <header className="row">
+   <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5 col-sm-12 col-md-12 col-lg-12">
      <div className="container-fluid ">   
     <NavLink className="navbar-brand fs-4" to="/">
       <i className="bi bi-speedometer2 fs-4 me-1"></i> Diet Food

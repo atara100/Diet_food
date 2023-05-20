@@ -32,6 +32,12 @@ function NewPassword() {
     },[_id,token])
 
     function newPassword(password:string){
+      if(password!==confirmPassword){
+        setError('The passwords dont match');
+        setPassword('');
+        setconfirmPassword('');
+        return;
+      }
         
         const res=postRequest(`users/reset-password/${_id}/${token}`,{password},false);
         if(!res)return;
@@ -43,9 +49,9 @@ function NewPassword() {
       }
       
       if(window.confirm(`${json.ok}, Do you want to continue to login?`)){
-        navigate('/login');
+        navigate('/');
       }
-      navigate('/');
+      navigate('/login');
       })
     }
 
@@ -83,7 +89,7 @@ function NewPassword() {
         {
             error &&
             
-            <div>{error}</div>
+            <div className="mt-5 mb-5 text-center fs-3 text-danger">{error}</div>
             
         }
     </>

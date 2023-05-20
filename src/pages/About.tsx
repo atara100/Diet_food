@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 function About() {
     return (
         <>
+        <Link className="btn ms-5" to={"/"}><i className="bi bi-arrow-left-circle fs-2"></i></Link>
         <div className="card mb-5 " >
          <img src="assets/img/about-page.jpg" className="card-img-top" alt="..."/>
          <div className="card-body w-75 mx-auto">
