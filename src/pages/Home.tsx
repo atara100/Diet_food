@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState} from "react";
+import { useContext} from "react";
 import { AppContext } from "../App";
-import Recipes, { IRecipe } from "./Recipes";
+import Recipes from "./Recipes";
 import { Link } from "react-router-dom";
-import RecipeCard from "../components/RecipeCard";
 
 function Home() {
         

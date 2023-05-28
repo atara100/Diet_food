@@ -18,6 +18,9 @@ import Favourites from './pages/Favourites';
 import PasswordReset from './auth/PasswordReset';
 import ContentDetails from './pages/ContentDetails';
 import NewPassword from './auth/NewPassword';
+import RouteGuardAdmin from './auth/RouteGuardAdmin';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface ILoginData{
   email:string,
@@ -77,17 +80,18 @@ function App() {
     <AppContext.Provider value={{login,userId,userName,handlelogout,userAdmin,userFavourites,updateUserFavourites}}>
 
       <Header/>
+      <ToastContainer/>
 
     <Routes>
       <Route path='/' element={<Home/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/signup' element={<SignUp/>}></Route>
       <Route path='/recipes' element={<RouteGuard> <Recipes/> </RouteGuard>}></Route>
-      <Route path='/addrecipe' element={<AddRecipe/>}></Route>
-      <Route path='/updaterecipe/:id' element={<UpdateRecipe/>}></Route>
-      <Route path='/deleterecipe/:id' element={<DeleteRecipe/>}></Route>
+      <Route path='/addrecipe' element={<RouteGuardAdmin><AddRecipe/></RouteGuardAdmin>}></Route>
+      <Route path='/updaterecipe/:id' element={<RouteGuardAdmin><UpdateRecipe/></RouteGuardAdmin>}></Route>
+      <Route path='/deleterecipe/:id' element={<RouteGuardAdmin><DeleteRecipe/></RouteGuardAdmin>}></Route>
       <Route path='/about' element={<About/>}></Route>
-      <Route path='/favourites' element={<Favourites/>}></Route>
+      <Route path='/favourites' element={<RouteGuard><Favourites/></RouteGuard>}></Route>
       <Route path='/passwordReset' element={<PasswordReset/>}></Route>
       <Route path='/contentDetails/:id' element={<RouteGuard><ContentDetails/></RouteGuard>}></Route>
       <Route path='/reset-password/:_id/:token' element={<NewPassword/>}></Route>

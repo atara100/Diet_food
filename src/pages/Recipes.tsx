@@ -1,9 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import SearchFilteringBar from "../components/ButtonsBar";
-import { deleteRequest, getRequest, patchRequest } from "../services/apiService";
+import {  getRequest, patchRequest } from "../services/apiService";
 import { Link, useNavigate } from "react-router-dom";
-import Panel from "../components/Panel";
 import { AppContext } from "../App";
 
 export interface IRecipe{
@@ -27,7 +26,6 @@ export enum FilterCalories{
 
 function Recipes() {
 
-   const navigate=useNavigate();
    const [recipes,setRecipes]=useState<Array<IRecipe>>([]);
    const [search,setSearch]=useState('');
    const [filtered,setFiltered]=useState([...recipes]);
