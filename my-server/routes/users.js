@@ -13,6 +13,7 @@ router.get('/reset-password/:_id/:token',users.resetPassword);
 router.post('/reset-password/:_id/:token',users.newPassword);
 router.patch('/:userId',users.favourites);
 router.get('/:userId',users.userFavourites);
+router.get('/',users.getAll);
 
 
 module.exports = router;

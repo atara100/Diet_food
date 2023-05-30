@@ -21,6 +21,7 @@ import NewPassword from './auth/NewPassword';
 import RouteGuardAdmin from './auth/RouteGuardAdmin';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UserManagement from './pages/UserManagement';
 
 interface ILoginData{
   email:string,
@@ -95,6 +96,7 @@ function App() {
       <Route path='/passwordReset' element={<PasswordReset/>}></Route>
       <Route path='/contentDetails/:id' element={<RouteGuard><ContentDetails/></RouteGuard>}></Route>
       <Route path='/reset-password/:_id/:token' element={<NewPassword/>}></Route>
+      <Route path='/usermanagement' element={<RouteGuardAdmin><UserManagement/></RouteGuardAdmin>}></Route>
     </Routes>
 
     <Footer/>

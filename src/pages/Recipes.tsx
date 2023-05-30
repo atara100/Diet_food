@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import SearchFilteringBar from "../components/ButtonsBar";
 import {  getRequest, patchRequest } from "../services/apiService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from "../App";
 
 export interface IRecipe{
@@ -103,7 +103,7 @@ function Recipes() {
 
     return ( 
     <>
-        <h1 className="text-center">All Recipes </h1> 
+        <h1 className="text-center mt-5">All Recipes </h1> 
 
           <SearchFilteringBar 
            search={search} handleSearch={handleSearch} 

@@ -1,6 +1,5 @@
 const {Recipe}=require('../models/Recipe');
 const joi=require('joi');
-const { User } = require('../models/User');
 
 
 module.exports={

@@ -27,14 +27,18 @@ function Header() {
                 About
             </Nav.Link>
 
-            <Nav.Link className="nav-link fs-5 me-5" as={Link} to={'/favourites'}>
+            <Nav.Link className="nav-link fs-5 " as={Link} to={'/favourites'}>
                 My Favorites
+            </Nav.Link>
+
+            <Nav.Link className="nav-link fs-5 me-5" as={Link} to={'/usermanagement'}>
+                User Management
             </Nav.Link>
 
             {
                   userName.length>0 &&
-                  <Nav.Link className="ms-5 fs-5" >
-                    Hello! {userName}
+                  <Nav.Link className="ms-5 fs-3 text-warning" >
+                   Hello! {userName}
                   </Nav.Link>
             }
 
