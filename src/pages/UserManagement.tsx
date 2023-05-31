@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { getRequest, patchRequest, postRequest } from "../services/apiService";
+import { deleteRequest, getRequest, patchRequest } from "../services/apiService";
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export interface IUser{
    _id:number;
@@ -15,7 +17,7 @@ export interface IUser{
 function UserManagement() {
 
     const [usersList,setUsersList]=useState<Array<IUser>>([]);
-    const [checked,setChecked]=React.useState<boolean>(false);
+    const navigate=useNavigate();
     let index=0;
 
     function fetchRecipes(){
@@ -29,27 +31,31 @@ function UserManagement() {
 
    useEffect(fetchRecipes,[]);
    
-   function handleChange(checked:any,userId:number){
-    console.log('changed');
-    
-    if(checked){
-        // const res=patchRequest(`users/${userId}`);
-    }else{
-        checked=true;
-    }   
+   function handleChange(userAdmin:boolean,userId:number){
+      const id=''+userId;
+      const userAdminData=!userAdmin;
+      const data={userAdminData}
+     const res=patchRequest(`users/admin-status/${id}`,data);
+       if(!res) return;
+        res.then(res=>res.json())
+           .then(json=>{
+            if(json.error){
+                console.log(json.error)
+                return;
+            }
+
+            navigate(`/adminMessage/${id}`);
+           })
     
    }
 
-   function deleteUser(){
-    console.log('delete');
-    
-   }
 
     return ( 
         <>
+        <Link className="btn ms-5" to={"/"}><i className="bi bi-arrow-left-circle fs-2"></i></Link>
         <h1 className="mt-5 mb-5 text-center">Users List:</h1>
 
-        <div>
+        <div className="p-5">
            
 
             <table className="table">
@@ -76,14 +82,14 @@ function UserManagement() {
                       <input
                       type="checkbox"
                       checked={user.admin}
-                      onChange={()=>handleChange(checked,user._id)}
+                      onChange={()=>handleChange(user.admin,user._id)}
                        />
                     </td>
 
                     <td>
-                      <button onClick={deleteUser} className="btn btn-default">
-                        <i className="bi-trash "></i>
-                      </button>
+                      <Link  to={`/deleteuser/${user._id}`}  className="btn">
+                        <i className="bi-trash"></i>
+                      </Link>
                     </td>
 
                  </tr>

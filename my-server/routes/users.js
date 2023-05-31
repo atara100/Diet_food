@@ -14,6 +14,9 @@ router.post('/reset-password/:_id/:token',users.newPassword);
 router.patch('/:userId',users.favourites);
 router.get('/:userId',users.userFavourites);
 router.get('/',users.getAll);
+router.get('/get-user/:id',users.getUserById);
+router.delete('/:id',users.delete);
+router.patch('/admin-status/:id',users.changeAdminStatus);
 
 
 module.exports = router;

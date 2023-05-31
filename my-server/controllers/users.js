@@ -278,7 +278,81 @@ module.exports ={
             console.log(err);
             res.status(400).json({error:'error getting users'})
         }
+    },
+
+    delete: async function(req, res, next) {
+        try{
+            const schema = joi.object({
+                _id:joi.string().required()
+            });
+
+            const {error,value}=schema.validate({_id:req.params.id});
+
+            if(error){
+                console.log(error);
+                res.status(400).json({error:'Invalid data'});
+                return;
+            }
+
+            const deleted=User.findOne({_id:value._id});
+
+            await User.deleteOne(deleted).exec();
+            res.status(200).json({ok:'deleted!'});
+
+        }catch(err){
+            console.log(err);
+            res.status(400).json({error:'error delete user'});
+        }
+    },
+
+    changeAdminStatus: async function(req, res, next){
+        try{
+
+            const schema=joi.object({
+                userAdminData:joi.boolean().required(),
+            });
+
+            const {error,value}=schema.validate(req.body);
+
+            if (error) {
+                res.status(400).json({error:'Invalid data'});
+                return;
+            }
+
+            const user= await User.findOneAndUpdate({_id:req.params.id},{admin:value.userAdminData});
+            if(!user) return res.status(404).send('given id was not found');
+            const updated=await User.findOne({_id:req.params.id});
+            res.json(updated);
+            updated.save();
+
+        }catch(err){
+            console.log(err);
+            res.status(400).json({error:'error update user admin status'});
+        }
+    },
+
+    getUserById: async function(req, res, next){
+        try{
+            const schema=joi.object({
+                _id:joi.string().required()
+            });
+
+            const {error,value}=schema.validate({_id:req.params.id});
+
+            if(error){
+                res.status(400).json({error:'invalid data'});
+                return;
+            }
+
+            const result=await User.findOne({_id:value._id});
+            res.json(result);
+
+        }catch(err){
+            console.log(err);
+            res.status(400).json({error:'error getting user'})
+        }
     }
+
 
     
 

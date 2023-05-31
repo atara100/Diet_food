@@ -4,7 +4,6 @@ import Title from "../components/Title";
 import { deleteRequest, getRequest, patchRequest } from "../services/apiService";
 import { IRecipe } from "./Recipes";
 import { AppContext } from "../App";
-import { log } from "console";
 
 function DeleteRecipe() {
 

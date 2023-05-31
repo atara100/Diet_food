@@ -9,11 +9,12 @@ function Header() {
     const context=useContext(AppContext);
     if(!context) return <div>Error</div>
     const userName = context.userName;
-    
+    const userAdmin=context.userAdmin;
+     
     return ( 
 <>
-<div>
-   <Navbar bg="dark" variant="dark" expand="lg">
+<div className="">
+   <Navbar bg="dark" variant="dark" expand="lg" className="">
     <> 
     <Navbar.Brand as={Link} to={'/'} className="navbar-brand fs-4">
       <i className="bi bi-speedometer2 fs-4 me-1"></i> Diet Food
@@ -31,14 +32,18 @@ function Header() {
                 My Favorites
             </Nav.Link>
 
-            <Nav.Link className="nav-link fs-5 me-5" as={Link} to={'/usermanagement'}>
-                User Management
-            </Nav.Link>
+            {
+              userAdmin &&
+              <Nav.Link className="nav-link fs-5 me-5" as={Link} to={'/usermanagement'}>
+                    User Management
+              </Nav.Link>
+            }
+                        
 
             {
                   userName.length>0 &&
                   <Nav.Link className="ms-5 fs-3 text-warning" >
-                   Hello! {userName}
+                    Hello! {userName}
                   </Nav.Link>
             }
 

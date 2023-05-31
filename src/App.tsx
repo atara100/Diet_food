@@ -22,6 +22,8 @@ import RouteGuardAdmin from './auth/RouteGuardAdmin';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserManagement from './pages/UserManagement';
+import DeleteUser from './pages/DeleteUser';
+import AdminMessage from './pages/AdminMessage';
 
 interface ILoginData{
   email:string,
@@ -97,6 +99,8 @@ function App() {
       <Route path='/contentDetails/:id' element={<RouteGuard><ContentDetails/></RouteGuard>}></Route>
       <Route path='/reset-password/:_id/:token' element={<NewPassword/>}></Route>
       <Route path='/usermanagement' element={<RouteGuardAdmin><UserManagement/></RouteGuardAdmin>}></Route>
+      <Route path='/deleteuser/:id' element={<RouteGuardAdmin><DeleteUser/></RouteGuardAdmin>}></Route>
+      <Route path='/adminMessage/:id' element={<RouteGuardAdmin><AdminMessage/></RouteGuardAdmin>}></Route>
     </Routes>
 
     <Footer/>
