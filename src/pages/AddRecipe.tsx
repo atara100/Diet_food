@@ -57,7 +57,7 @@ function AddRecipe() {
     const { files } = event.target;
     const selectedFiles = files as FileList;   
     setimage(URL.createObjectURL(selectedFiles?.[0])) 
-    };
+    }; 
 
     
 
