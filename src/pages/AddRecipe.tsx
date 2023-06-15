@@ -16,6 +16,7 @@ function AddRecipe() {
     const [calories,setCalories]=useState<string>('');
     const [error, setError] = useState<string>('');
 
+
     function handleClick(){
         const schema=Joi.object().keys({
             image:Joi.string().min(10),
@@ -56,7 +57,8 @@ function AddRecipe() {
     const { files } = event.target;
     const selectedFiles = files as FileList;   
     setimage(URL.createObjectURL(selectedFiles?.[0])) 
-  };
+    };
+
     
 
     return ( 
